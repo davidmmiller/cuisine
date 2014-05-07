@@ -1211,11 +1211,15 @@ def user_remove(name, rmhome=None):
 #
 # =============================================================================
 
-def group_create(name, gid=None):
-	"""Creates a group with the given name, and optionally given gid."""
+def group_create(name, gid=None, gid_min=None, gid_max=None):
+	"""Creates a group with the given name, and optionally given gid (or gid between gid_min and gid_max)."""
 	options = []
 	if gid:
 		options.append("-g '%s'" % (gid))
+	if gid_min:
+		options.append("-K GID_MIN='%s'" % (gid_min))
+	if gid_max:
+		options.append("-K GID_MAX='%s'" % (gid_max))
 	sudo("groupadd %s '%s'" % (" ".join(options), name))
 
 def group_check(name):
